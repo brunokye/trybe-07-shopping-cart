@@ -29,6 +29,8 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
+const cartItemClickListener = ({ target }) => target.remove();
+
 /**
  * Função responsável por criar e retornar um item do carrinho.
  * @param {Object} product - Objeto do produto.
@@ -41,7 +43,7 @@ const createCustomElement = (element, className, innerText) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `ID: ${id} | TITLE: ${title} | PRICE: $${price}`;
-  // li.addEventListener('click', cartItemClickListener);
+  li.addEventListener('click', cartItemClickListener);
   return li;
 };
 
@@ -71,7 +73,7 @@ const createProductItemElement = ({ id, title, thumbnail }) => {
 
   const getButtonAdd = document.querySelectorAll('.item__add');
   getButtonAdd.forEach((element) => element.addEventListener('click', itemId));
-
+  
   return section;
 };
 
