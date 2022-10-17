@@ -72,6 +72,10 @@ const createCartItemElement = ({ id, title, price }) => {
   return li;
 };
 
+// const itemId = async () => {
+
+// }
+
 const itemList = async () => {
   const getList = await fetchProducts('computador').then(({ results }) => results);
   const getItems = document.querySelector('.items');
