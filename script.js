@@ -30,6 +30,29 @@ const createCustomElement = (element, className, innerText) => {
 };
 
 /**
+ * Função responsável por criar e retornar um item do carrinho.
+ * @param {Object} product - Objeto do produto.
+ * @param {string} product.id - ID do produto.
+ * @param {string} product.title - Título do produto.
+ * @param {string} product.price - Preço do produto.
+ * @returns {Element} Elemento de um item do carrinho.
+ */
+ const createCartItemElement = ({ id, title, price }) => {
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `ID: ${id} | TITLE: ${title} | PRICE: $${price}`;
+  // li.addEventListener('click', cartItemClickListener);
+  return li;
+};
+
+const itemId = ({ target }) => {
+  const getId = target.parentNode.firstChild.innerText;
+  const getCart = document.querySelector('.cart__items');
+
+  fetchItem(getId).then((element) => getCart.appendChild(createCartItemElement(element)));
+};
+
+/**
  * Função responsável por criar e retornar o elemento do produto.
  * @param {Object} product - Objeto do produto. 
  * @param {string} product.id - ID do produto.
@@ -46,6 +69,9 @@ const createProductItemElement = ({ id, title, thumbnail }) => {
   section.appendChild(createProductImageElement(thumbnail));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
 
+  const getButtonAdd = document.querySelectorAll('.item__add');
+  getButtonAdd.forEach((element) => element.addEventListener('click', itemId));
+
   return section;
 };
 
@@ -56,31 +82,11 @@ const createProductItemElement = ({ id, title, thumbnail }) => {
  */
 const getIdFromProductItem = (product) => product.querySelector('span.id').innerText;
 
-/**
- * Função responsável por criar e retornar um item do carrinho.
- * @param {Object} product - Objeto do produto.
- * @param {string} product.id - ID do produto.
- * @param {string} product.title - Título do produto.
- * @param {string} product.price - Preço do produto.
- * @returns {Element} Elemento de um item do carrinho.
- */
-const createCartItemElement = ({ id, title, price }) => {
-  const li = document.createElement('li');
-  li.className = 'cart__item';
-  li.innerText = `ID: ${id} | TITLE: ${title} | PRICE: $${price}`;
-  li.addEventListener('click', cartItemClickListener);
-  return li;
-};
-
-// const itemId = async () => {
-
-// }
-
 const itemList = async () => {
   const getList = await fetchProducts('computador').then(({ results }) => results);
   const getItems = document.querySelector('.items');
 
-  getList.forEach((element) => getItems.append(createProductItemElement(element)));
+  getList.forEach((element) => getItems.appendChild(createProductItemElement(element)));
 };
 
 window.onload = () => { 
