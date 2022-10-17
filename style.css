@@ -148,7 +148,8 @@ body {
   background-color: rgb(249, 249, 246);
 }
 
-.loading-container {
+.loading-container , .price-container {
   text-align: center;
   margin-top: 10px;
+  margin-bottom: 10px;
 }
