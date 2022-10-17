@@ -41,6 +41,20 @@ const listClear = () => {
   getButtonClear.addEventListener('click', cartItemClickClear);
 };
 
+const addLoading = () => {
+  const loadingContainer = document.querySelector('.loading-container');
+  const loadingText = document.createElement('span');
+
+  loadingText.className = 'loading';
+  loadingText.innerText = 'carregando...';
+  loadingContainer.appendChild(loadingText);
+};
+
+const removeLoading = () => {
+  const loadingContainer = document.querySelector('.loading-container');
+  loadingContainer.innerHTML = '';
+};
+
 /**
  * Função responsável por criar e retornar um item do carrinho.
  * @param {Object} product - Objeto do produto.
@@ -61,7 +75,9 @@ const itemId = ({ target }) => {
   const getId = target.parentNode.firstChild.innerText;
   const getCart = document.querySelector('.cart__items');
 
+  addLoading();
   fetchItem(getId).then((element) => getCart.appendChild(createCartItemElement(element)));
+  removeLoading();
 };
 
 /**
@@ -99,9 +115,11 @@ const itemList = async () => {
   const getItems = document.querySelector('.items');
 
   getList.forEach((element) => getItems.appendChild(createProductItemElement(element)));
+  removeLoading();
 };
 
 window.onload = () => { 
+  addLoading();
   itemList();
   listClear();
 };
