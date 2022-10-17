@@ -31,6 +31,16 @@ const createCustomElement = (element, className, innerText) => {
 
 const cartItemClickListener = ({ target }) => target.remove();
 
+const cartItemClickClear = () => { 
+  const getCart = document.querySelector('.cart__items');
+  getCart.innerText = '';
+};
+
+const listClear = () => {
+  const getButtonClear = document.querySelector('.empty-cart');
+  getButtonClear.addEventListener('click', cartItemClickClear);
+};
+
 /**
  * Função responsável por criar e retornar um item do carrinho.
  * @param {Object} product - Objeto do produto.
@@ -93,4 +103,5 @@ const itemList = async () => {
 
 window.onload = () => { 
   itemList();
+  listClear();
 };
